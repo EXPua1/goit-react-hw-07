@@ -1,6 +1,26 @@
 const INITIAL_STATE = {
-  users: JSON.parse(localStorage.getItem("contacts")) ?? [],
+  contacts: JSON.parse(localStorage.getItem("contacts")) ?? [],
 };
 export const contactsReducer = (state = INITIAL_STATE, action) => {
-  return state;
+  switch (action.type) {
+    case "contacts/addContact": {
+      return {
+        ...state,
+        contacts: [...state.contacts, action.payload],
+      };
+    }
+    case "contacts/deleteContacts": {
+      return {
+        ...state,
+        contacts: state.contacts.filter(
+          (contact) => contact.id !== action.payload
+        ),
+      };
+    }
+    default:
+      return state;
+  }
 };
+
+//contacts/addContact
+//contacts/deleteContact

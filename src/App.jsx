@@ -9,16 +9,11 @@ import {
   SearchBox,
   ContactForm,
 } from "./components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
-  const contacts = useSelector((state) => state.contacts);
-  // const initialContacts = [
-  //   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-  //   { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-  //   { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-  //   { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  // ];
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.userData.contacts);
   const [searchTerm, setSearchTerm] = useState("");
   // const [contacts, setContacts] = useState(() => {
   //   const savedContacts = JSON.parse(localStorage.getItem("contacts"));
@@ -35,17 +30,6 @@ const App = () => {
   //   localStorage.setItem("contacts", JSON.stringify(contacts));
   // }, [contacts]);
 
-  const addContact = (newContact) => {
-    contacts((prevContacts) => [...prevContacts, newContact]);
-  };
-
-  const onDeleteContacts = (id) => {
-    console.log("Deleting contact with id:", id); // Додайте цей лог
-    contacts((prevContacts) =>
-      prevContacts.filter((contact) => contact.id !== id)
-    );
-  };
-
   // const resetContacts = () => {
   //   setContacts(initialContacts);
   //   localStorage.setItem("contacts", JSON.stringify(initialContacts)); // Обновляем локальное хранилище
@@ -54,15 +38,13 @@ const App = () => {
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  console.log(contacts);
   return (
     <Section>
       <Container>
-        <ContactForm onAddContact={addContact} />
+        <ContactForm />
         <SearchBox value={searchTerm} onSearch={setSearchTerm} />
-        <ContactList
-          contacts={filteredContacts}
-          onDeleteContacts={onDeleteContacts}
-        />
+        <ContactList contacts={filteredContacts} />
         {/* <button onClick={resetContacts}>Сбросить контакты</button> */}
       </Container>
     </Section>
