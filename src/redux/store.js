@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { thunk } from "redux-thunk";
 
 // Налаштування конфігурації для redux-persist
 const contactsConfig = {
@@ -29,7 +30,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(thunk), // Додайте thunk до middleware
 });
 
 export const persistor = persistStore(store);
