@@ -1,18 +1,15 @@
 import React from "react";
 import css from "./Contact.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteContact, selectContacts } from "../../redux/contactsSlice";
 
 const Contact = ({ id, name, number }) => {
+  const contacnts = useSelector(selectContacts);
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.userData.contacts);
 
   const onDeleteContacts = (id) => {
-    console.log("Deleting contact with id:", id); // Додайте цей лог
-    const action = {
-      type: "contacts/deleteContacts",
-      payload: id,
-    };
-    dispatch(action);
+    console.log("Deleting contact with id:", id);
+    dispatch(deleteContact(id));
   };
 
   return (

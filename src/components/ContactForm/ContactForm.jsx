@@ -3,15 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
 
 const ContactForm = () => {
-  const contacts = useSelector((state) => state.userData.contacts);
   const dispatch = useDispatch();
-  const addContact = (newContact) => {
-    const action = {
-      type: "contacts/addContact",
-      payload: newContact,
-    };
+  const addNewContact = (newContact) => {
+    const action = addContact(newContact);
     dispatch(action);
   };
 
@@ -33,7 +30,7 @@ const ContactForm = () => {
       name: values.name,
       number: values.number,
     };
-    addContact(newContact); // Виклик функції для додавання контакту
+    addNewContact(newContact); // Виклик функції для додавання контакту
     resetForm();
   };
 
