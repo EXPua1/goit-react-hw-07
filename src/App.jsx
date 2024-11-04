@@ -9,14 +9,32 @@ import {
   SearchBox,
   ContactForm,
 } from "./components";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectContactsList,
+  selectError,
+  selectLoading,
+} from "./redux/selectors";
+import { fetchContacts } from "./redux/contactsOps";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContactsList);
+  const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [contacts, dispatch]);
+
   return (
     <Section>
       <Container>
         <ContactForm />
         <SearchBox />
-        <ContactList />
+        {loading && <p>Loading contacts...</p>}
+        {error && <p>{error}</p>}
+        {Array.isArray(contacts) && <ContactList />}
       </Container>
     </Section>
   );
