@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, [contacts, dispatch]);
+  }, [dispatch]);
 
   return (
     <Section>
